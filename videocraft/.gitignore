@@ -1,0 +1,5 @@
+/target/
+/test-media/
+*.mp4
+*.wav
+
