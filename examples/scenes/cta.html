@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #0b1020; color: #fff; font-family: system-ui, 'Segoe UI', sans-serif; }
+  .card { width: 76vw; margin: 0 auto; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4vw; }
+  h1 { font-size: 8vw; margin: 0; }
+  p { font-size: 4vw; margin: 0; opacity: .85; }
+  .cta { background: #4ade80; color: #06210f; font-weight: 700; font-size: 5vw; padding: 3vw 8vw; border-radius: 2vw; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Hoy empieza mejor</h1>
+    <p>Integracion en minutos, no en semanas.</p>
+    <div class="cta" id="cta">Empieza gratis</div>
+  </div>
+  <script>
+    // Contrato VideoCraft: pinta el estado exacto del segundo t.
+    var DURATION = 2.0; // debe coincidir con duration del item scene
+    window.vcSeek = function (t) {
+      var p = Math.min(Math.max(t / DURATION, 0), 1);
+      var cta = document.getElementById('cta');
+      cta.style.opacity = Math.min(1, p * 4);
+      cta.style.transform = 'scale(' + (0.85 + Math.min(1, p * 4) * 0.15) + ')';
+      document.body.style.backgroundColor = 'rgb(' + Math.round(11 + 8 * p) + ',' +
+        Math.round(16 + 14 * p) + ',' + Math.round(32 + 16 * p) + ')';
+    };
+  </script>
+</body>
+</html>

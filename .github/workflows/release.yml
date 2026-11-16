@@ -9,19 +9,23 @@ permissions:
 jobs:
   windows:
     runs-on: windows-latest
+    timeout-minutes: 30
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo test --locked
-      - run: cargo build --release --locked
       - name: Install FFmpeg
         run: choco install ffmpeg -y --no-progress
-      - name: Render integration tests
+      - run: cargo test --locked
+      - run: cargo build --release --locked
+      # Real renders: media-only, HTML-only (headless Edge is preinstalled on
+      # the runner) and mixed timelines, with synthetic media.
+      - name: Integration renders
         shell: pwsh
         run: ./tests/smoke.ps1
       - name: Checksum
+        if: startsWith(github.ref, 'refs/tags/v')
         shell: pwsh
         run: |
           $hash = (Get-FileHash target/release/videocraft.exe -Algorithm SHA256).Hash.ToLower()
@@ -37,6 +41,10 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create ${{ github.ref_name }} target/release/videocraft.exe target/release/SHA256SUMS.txt --generate-notes
-
-
+        run: |
+          $tag = $env:GITHUB_REF_NAME
+          gh release view $tag --repo $env:GITHUB_REPOSITORY 2>$null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag --repo $env:GITHUB_REPOSITORY --verify-tag --title "VideoCraft $tag" --notes "Binario Windows x64 construido por CI desde la etiqueta $tag. Requisitos: FFmpeg/ffprobe en PATH y un navegador Chromium (Edge o Chrome) para escenas HTML. Ver README.md."
+          }
+          gh release upload $tag target/release/videocraft.exe target/release/SHA256SUMS.txt --repo $env:GITHUB_REPOSITORY --clobber

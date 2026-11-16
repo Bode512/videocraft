@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "mood": "energetic",
+  "timeline": [
+    { "kind": "scene", "file": "scenes/intro.html", "duration": 3.0 },
+    { "kind": "scene", "file": "scenes/cta.html", "duration": 2.0 }
+  ],
+  "music": {
+    "file": "media/music.wav",
+    "bpm": 120.0,
+    "mood": "energetic",
+    "license": "REPLACE with the real license or ownership",
+    "gain": 0.3
+  },
+  "voice": null
+}

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "mood": "energetic",
+  "timeline": [
+    { "kind": "scene", "file": "scenes/intro.html", "duration": 2.0 },
+    { "kind": "clip", "file": "media/hook.mp4", "start": 0.0, "duration": 2.0 },
+    { "kind": "image", "file": "media/product.png", "duration": 1.0 },
+    { "kind": "clip", "file": "media/product.mp4", "start": 0.5, "duration": 3.0 },
+    { "kind": "scene", "file": "scenes/cta.html", "duration": 2.0 }
+  ],
+  "music": {
+    "file": "media/music.wav",
+    "bpm": 120.0,
+    "mood": "energetic",
+    "license": "REPLACE with the real license or ownership",
+    "gain": 0.25
+  },
+  "voice": "media/voice.wav"
+}

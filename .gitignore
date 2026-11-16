@@ -1,5 +1,7 @@
 /target/
 /test-media/
+*.exe
+*.zip
 *.mp4
 *.wav
-
+/examples/media/
