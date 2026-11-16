@@ -1,0 +1,58 @@
+<!doctype html>
+<html dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #030711; color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; }
+  .bg { position: absolute; inset: 0; background: radial-gradient(130% 90% at 50% 28%, #12245c 0%, #081030 52%, #02040e 100%); }
+  .grid { position: absolute; inset: 0; opacity: .08; background-image: linear-gradient(rgba(96,165,250,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(96,165,250,.6) 1px, transparent 1px); background-size: 12vw 12vw; }
+  .head { position: absolute; top: 9vw; left: 0; right: 0; text-align: center; font-size: 4.6vw; font-weight: 800; letter-spacing: .3em; color: #60a5fa; }
+  .rows { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5.5vw; }
+  .row { display: flex; align-items: baseline; gap: 4.5vw; opacity: 0; }
+  .num { font-size: 27vw; font-weight: 900; line-height: .85; font-variant-numeric: tabular-nums; }
+  .n1 { color: #60a5fa; text-shadow: 0 0 7vw rgba(59,130,246,.75); }
+  .n2 { color: #38bdf8; text-shadow: 0 0 7vw rgba(56,189,248,.75); }
+  .n3 { color: #a5b4fc; text-shadow: 0 0 7vw rgba(129,140,248,.75); }
+  .label { font-size: 8.5vw; font-weight: 900; letter-spacing: .06em; color: #eff6ff; }
+  .beat { position: absolute; bottom: 6vw; left: 0; right: 0; text-align: center; font-size: 3.4vw; letter-spacing: .5em; color: #1e3a8a; font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="grid" id="grid"></div>
+  <div class="head" id="head">داخل VideoCraft</div>
+  <div class="rows">
+    <div class="row" id="r1"><div class="num n1" id="v1">0</div><div class="label">محرّكات</div></div>
+    <div class="row" id="r2"><div class="num n2" id="v2">0</div><div class="label">أمر واحد</div></div>
+    <div class="row" id="r3"><div class="num n3" id="v3">0</div><div class="label">واجهات</div></div>
+  </div>
+  <div class="beat" id="beat">● ● ●</div>
+<script>
+  var D = 3.0;
+  function ease(p) { return 1 - Math.pow(1 - Math.min(Math.max(p, 0), 1), 3); }
+  function seg(t, start, len) { return Math.min(Math.max((t - start) / len, 0), 1); }
+  window.vcSeek = function (t) {
+    var p = Math.min(Math.max(t / D, 0), 1);
+    var pulse = Math.exp(-6 * (t % 0.5));
+    document.getElementById('grid').style.opacity = 0.05 + 0.05 * Math.sin(t * 0.9);
+    var head = ease(seg(t, 0, 0.35));
+    var h = document.getElementById('head');
+    h.style.opacity = head;
+    h.style.letterSpacing = (0.3 + (1 - head) * 0.5) + 'em';
+    var targets = [2, 1, 0];
+    var starts = [0.15, 0.55, 0.95];
+    var rows = ['r1', 'r2', 'r3'], nums = ['v1', 'v2', 'v3'];
+    for (var i = 0; i < 3; i++) {
+      var row = document.getElementById(rows[i]);
+      row.style.opacity = ease(seg(t, starts[i], 0.25));
+      var e = ease(seg(t, starts[i], 0.6));
+      var el = document.getElementById(nums[i]);
+      el.textContent = Math.round(targets[i] * e);
+      var punch = e >= 1 ? 1 + 0.13 * pulse : 1 + 0.05 * (1 - e);
+      el.style.transform = 'scale(' + punch + ')';
+    }
+    document.getElementById('beat').style.opacity = 0.35 + 0.5 * pulse;
+  };
+</script>
+</body>
+</html>

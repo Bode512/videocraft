@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "mood": "neon",
+  "timeline": [
+    { "kind": "scene", "file": "scenes/es/hook.html", "duration": 3.0 },
+    { "kind": "scene", "file": "scenes/es/json.html", "duration": 3.0 },
+    { "kind": "scene", "file": "scenes/es/numbers.html", "duration": 3.0 },
+    { "kind": "scene", "file": "scenes/es/result.html", "duration": 2.5 },
+    { "kind": "scene", "file": "scenes/es/cta.html", "duration": 2.5 }
+  ],
+  "music": {
+    "file": "music.wav",
+    "bpm": 120.0,
+    "mood": "neon",
+    "license": "Generada con FFmpeg (síntesis propia) para este anuncio; sin terceros",
+    "gain": 0.35
+  },
+  "voice": "voice.wav"
+}

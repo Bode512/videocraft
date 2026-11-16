@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #050505; color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; }
+  .wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 7vw; box-sizing: border-box; gap: 3vw; }
+  .q { font-size: 11.5vw; font-weight: 900; line-height: 1.12; letter-spacing: -0.02em; }
+  .q .hl { color: #c4b5fd; }
+  .sub { font-size: 5.2vw; font-weight: 700; color: #a1a1aa; letter-spacing: .02em; }
+  .mark { position: absolute; font-size: 40vw; font-weight: 900; color: #7c3aed; opacity: .14; font-family: Georgia, serif; }
+  .m1 { top: -6vw; left: -2vw; }
+  .m2 { bottom: -14vw; right: -2vw; transform: rotate(12deg); }
+  .flash { position: absolute; inset: 0; background: #7c3aed; opacity: 0; }
+  .beat { position: absolute; bottom: 6vw; left: 0; right: 0; text-align: center; font-size: 3.4vw; letter-spacing: .5em; color: #52525b; font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="flash" id="flash"></div>
+  <div class="mark m1" id="m1">?</div>
+  <div class="mark m2" id="m2">?</div>
+  <div class="wrap">
+    <div class="q" id="q1">How long does<br>your AI take to<br><span class="hl">edit a video?</span></div>
+    <div class="sub" id="sub">less than you think</div>
+  </div>
+  <div class="beat" id="beat">● ● ●</div>
+<script>
+  var D = 3.0;
+  function ease(p) { return 1 - Math.pow(1 - Math.min(Math.max(p, 0), 1), 3); }
+  window.vcSeek = function (t) {
+    var p = Math.min(Math.max(t / D, 0), 1);
+    var pulse = Math.exp(-6 * (t % 0.5));
+    var m1 = document.getElementById('m1'), m2 = document.getElementById('m2');
+    m1.style.opacity = 0.1 + 0.08 * pulse;
+    m1.style.transform = 'scale(' + (1 + 0.08 * pulse) + ')';
+    m2.style.opacity = 0.08 + 0.08 * pulse;
+    m2.style.transform = 'scale(' + (1 + 0.06 * (1 - Math.exp(-6 * ((t + 0.25) % 0.5)))) + ')';
+    var q = ease(p * 2.2);
+    document.getElementById('q1').style.opacity = q;
+    document.getElementById('q1').style.transform = 'scale(' + (1.25 - q * 0.25) + ')';
+    var sub = ease(Math.max(0, (p - 0.45) * 2.5));
+    document.getElementById('sub').style.opacity = sub;
+    document.getElementById('sub').style.transform = 'translateY(' + (1 - sub) * 40 + 'px)';
+    var flash = Math.max(0, (p - 0.88) * 8.3);
+    document.getElementById('flash').style.opacity = flash;
+    document.getElementById('beat').style.opacity = 0.5 + 0.5 * pulse;
+  };
+</script>
+</body>
+</html>

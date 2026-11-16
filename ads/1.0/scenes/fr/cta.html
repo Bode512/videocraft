@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #f4efe4; color: #101014; font-family: 'Segoe UI', system-ui, sans-serif; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(70px); }
+  .b1 { width: 60vw; height: 60vw; left: -15vw; top: -10vw; background: radial-gradient(circle, rgba(124,58,237,.25), transparent 70%); }
+  .b2 { width: 55vw; height: 55vw; right: -12vw; bottom: -12vw; background: radial-gradient(circle, rgba(34,197,94,.22), transparent 70%); }
+  .wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 7vw; box-sizing: border-box; gap: 4.5vw; }
+  .tag { font-size: 4vw; font-weight: 800; letter-spacing: .3em; color: #16a34a; border: 0.4vw solid #16a34a; border-radius: 10vw; padding: 1.6vw 5vw; }
+  h1 { font-size: 17vw; margin: 0; line-height: 1; font-weight: 900; letter-spacing: -0.03em; color: #0d0d12; }
+  .sub { font-size: 5.4vw; font-weight: 700; color: #3f3f46; line-height: 1.4; }
+  .btn { font-size: 5.2vw; font-weight: 900; color: #fff; background: #16a34a; border-radius: 3.2vw; padding: 4vw 8vw; box-shadow: 0 2vw 6vw rgba(22,163,74,.45), inset 0 -0.6vw 0 rgba(0,0,0,.2); }
+  .url { font-family: Consolas, monospace; font-size: 4.4vw; font-weight: 700; color: #166534; }
+  .mit { font-size: 3.6vw; color: #71717a; font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="blob b1" id="b1"></div>
+  <div class="blob b2" id="b2"></div>
+  <div class="wrap">
+    <div class="tag" id="tag">VERSION 1.0</div>
+    <h1 id="h">VideoCraft</h1>
+    <div class="sub" id="sub">Gratuit · Local · Sans clés<br>Ton IA écrit. Ta vidéo existe.</div>
+    <div class="btn" id="btn">GitHub · Bode512/videocraft</div>
+    <div class="url" id="url">github.com/Bode512/videocraft</div>
+    <div class="mit" id="mit">MIT · Windows x64 · FFmpeg + Edge/Chrome</div>
+  </div>
+<script>
+  var D = 2.5;
+  function ease(p) { return 1 - Math.pow(1 - Math.min(Math.max(p, 0), 1), 3); }
+  function seg(t, start, len) { return Math.min(Math.max((t - start) / len, 0), 1); }
+  window.vcSeek = function (t) {
+    var pulse = Math.exp(-6 * (t % 0.5));
+    document.getElementById('b1').style.transform = 'translate(' + Math.sin(t * 0.6) * 4 + 'vw, ' + Math.cos(t * 0.5) * 3 + 'vw)';
+    document.getElementById('b2').style.transform = 'translate(' + Math.cos(t * 0.5) * 4 + 'vw, ' + Math.sin(t * 0.55) * 3 + 'vw)';
+    var tag = ease(seg(t, 0, 0.3));
+    var tg = document.getElementById('tag');
+    tg.style.opacity = tag;
+    tg.style.transform = 'translateY(' + (1 - tag) * 35 + 'px)';
+    var h = ease(seg(t, 0.1, 0.4));
+    var he = document.getElementById('h');
+    he.style.opacity = h;
+    he.style.transform = 'scale(' + (1.3 - h * 0.3) + ')';
+    var sub = ease(seg(t, 0.3, 0.35));
+    var sb = document.getElementById('sub');
+    sb.style.opacity = sub * 0.9;
+    sb.style.transform = 'translateY(' + (1 - sub) * 35 + 'px)';
+    var btn = ease(seg(t, 0.45, 0.35));
+    var bt = document.getElementById('btn');
+    bt.style.opacity = btn;
+    bt.style.transform = 'scale(' + (0.9 + btn * 0.1 + 0.02 * pulse) + ')';
+    document.getElementById('url').style.opacity = ease(seg(t, 0.6, 0.3));
+    document.getElementById('mit').style.opacity = ease(seg(t, 0.72, 0.3)) * 0.75;
+  };
+</script>
+</body>
+</html>

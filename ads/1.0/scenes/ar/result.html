@@ -1,0 +1,61 @@
+<!doctype html>
+<html dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #12020a; color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; }
+  .bg { position: absolute; inset: 0; background: radial-gradient(130% 95% at 50% 30%, #6b0f4d 0%, #3d0a35 45%, #160318 100%); }
+  .rays { position: absolute; inset: -30%; background: conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,.07) 0deg, transparent 12deg, rgba(255,255,255,.07) 24deg, transparent 36deg); }
+  .wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 7vw; box-sizing: border-box; gap: 4vw; }
+  .after { font-size: 8.5vw; font-weight: 800; color: #fbcfe8; }
+  .big { font-size: 23vw; font-weight: 900; line-height: .95; letter-spacing: -0.02em; background: linear-gradient(100deg, #fff 25%, #f9a8d4 70%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 6vw rgba(244,114,182,.55)); }
+  .chips { display: flex; gap: 2.6vw; flex-wrap: wrap; justify-content: center; }
+  .chip { font-family: Consolas, monospace; font-size: 4.4vw; font-weight: 700; color: #fde7f3; border: 1px solid rgba(249,168,212,.55); background: rgba(0,0,0,.3); border-radius: 2.4vw; padding: 2vw 4vw; }
+  .check { font-size: 5.6vw; font-weight: 900; color: #4ade80; letter-spacing: .1em; }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="rays" id="rays"></div>
+  <div class="wrap">
+    <div class="after" id="after">بعد 11 ثانية…</div>
+    <div class="big" id="big">MP4 حقيقي</div>
+    <div class="chips">
+      <div class="chip" id="c1">1080×1920</div>
+      <div class="chip" id="c2">30 FPS</div>
+      <div class="chip" id="c3">H.264 · AAC</div>
+    </div>
+    <div class="check" id="check">✓ تم التحقق عبر CLI</div>
+  </div>
+<script>
+  var D = 2.5;
+  function ease(p) { return 1 - Math.pow(1 - Math.min(Math.max(p, 0), 1), 3); }
+  function seg(t, start, len) { return Math.min(Math.max((t - start) / len, 0), 1); }
+  window.vcSeek = function (t) {
+    var pulse = Math.exp(-6 * (t % 0.5));
+    var rays = document.getElementById('rays');
+    rays.style.transform = 'rotate(' + (t * 9) + 'deg)';
+    rays.style.opacity = 0.5 + 0.2 * pulse;
+    var after = ease(seg(t, 0, 0.3));
+    var a = document.getElementById('after');
+    a.style.opacity = after;
+    a.style.transform = 'translateY(' + (1 - after) * 40 + 'px)';
+    var big = ease(seg(t, 0.22, 0.45));
+    var b = document.getElementById('big');
+    b.style.opacity = big;
+    b.style.transform = 'scale(' + (1.4 - big * 0.4 + 0.02 * pulse) + ')';
+    var chips = ['c1', 'c2', 'c3'];
+    for (var i = 0; i < 3; i++) {
+      var c = ease(seg(t, 0.6 + i * 0.12, 0.25));
+      var el = document.getElementById(chips[i]);
+      el.style.opacity = c;
+      el.style.transform = 'translateY(' + (1 - c) * 35 + 'px)';
+    }
+    var ck = ease(seg(t, 1.05, 0.35));
+    var ce = document.getElementById('check');
+    ce.style.opacity = ck;
+    ce.style.transform = 'scale(' + (0.9 + ck * 0.1 + 0.02 * pulse) + ')';
+  };
+</script>
+</body>
+</html>

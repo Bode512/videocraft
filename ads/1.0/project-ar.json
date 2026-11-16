@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "mood": "neon",
+  "timeline": [
+    { "kind": "scene", "file": "scenes/ar/hook.html", "duration": 3.0 },
+    { "kind": "scene", "file": "scenes/ar/json.html", "duration": 3.0 },
+    { "kind": "scene", "file": "scenes/ar/numbers.html", "duration": 3.0 },
+    { "kind": "scene", "file": "scenes/ar/result.html", "duration": 2.5 },
+    { "kind": "scene", "file": "scenes/ar/cta.html", "duration": 2.5 }
+  ],
+  "music": {
+    "file": "sfx.wav",
+    "bpm": 120.0,
+    "mood": "neon",
+    "license": "Sound effects synthesized with FFmpeg (own synthesis); no third-party material",
+    "gain": 0.5
+  },
+  "voice": "voice-ar.wav"
+}
